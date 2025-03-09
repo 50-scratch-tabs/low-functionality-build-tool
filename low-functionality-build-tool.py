@@ -11,7 +11,7 @@ def read_until(data,index,pattern):
 def systemhook(args):
   raise ValueError("Invalid system hook")
 
-def findarg(args,target):
+def findarg(args,target,placeholder):
   new_args=[]
   for i in args:
     if "="  in i:
@@ -21,12 +21,12 @@ def findarg(args,target):
   try:
     return new_args[int(target)][1]
   except IndexError:
-    return ""
+    return placeholder
   except ValueError:
     for i in new_args:
       if i[0]==target:
         return i[1]
-  return ""
+  return placeholder
 
 def parse(title,args=[]):
   try: file=open(os.path.join(build_directory,title)).read()
@@ -46,7 +46,7 @@ def parse(title,args=[]):
         if len(newargs)!=1: raise ValueError("Route takes exactly one argument")
         route=newargs[0]
       elif command=="arg":
-        parsed+=findarg(args,newargs)
+        parsed+=findarg(args,newargs[0],newargs[1])
       else:
         parsed+=parse(command,args)[0]
     else:
