@@ -33,6 +33,7 @@ def parse(title,args=[]):
     else:
       parsed+=file[index]
       index+=1
+    if index==len(file): break
   return parsed,route
 
 if __name__=="__main__":
@@ -40,10 +41,10 @@ if __name__=="__main__":
   if not os.path.isdir(build_directory):
     print("Argument 1 is not a valid directory")
     exit()
-  os.mkdir("output")
+  os.makedirs("output",exist_ok=True)
   for file in os.listdir(build_directory):
     parsed=parse(file)
     if parsed[1] is not None:
-      os.makedirs(os.path.join("output",os.path.dirname(parsed[1])))
+      os.makedirs(os.path.join("output",os.path.dirname(parsed[1])),exist_ok=True)
       open(os.path.join("output",parsed[1]),"w").write(parsed[0])
       
