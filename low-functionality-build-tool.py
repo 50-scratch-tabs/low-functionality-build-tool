@@ -59,7 +59,7 @@ if __name__=="__main__":
   build_directory=sys.argv[1]
   if not os.path.isdir(build_directory):
     print("Argument 1 is not a valid directory")
-    exit()
+    exit(1)
   if len(sys.argv)>2:
     outdir=sys.argv[2]
   else:
