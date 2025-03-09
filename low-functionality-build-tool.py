@@ -48,7 +48,7 @@ def parse(title,args=[]):
       elif command=="arg":
         parsed+=findarg(args,newargs[0],newargs[1])
       else:
-        parsed+=parse(command,args)[0]
+        parsed+=parse(command,newargs)[0]
     else:
       parsed+=file[index]
       index+=1
