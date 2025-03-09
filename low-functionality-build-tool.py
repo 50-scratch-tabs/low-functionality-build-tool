@@ -6,7 +6,7 @@ def read_until(data,index,pattern):
   original_index=index
   while index<len(data) and not data[index:].startswith(pattern):
     index+=1
-  return index,data[original_index:index]
+  return index+len(pattern),data[original_index:index]
 
 def systemhook(args):
   raise ValueError("Invalid system hook")
