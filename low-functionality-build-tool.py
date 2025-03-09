@@ -19,7 +19,7 @@ def parse(title,args=[]):
   route=None
   while True:
     if file[index:index+3]=="(((":
-      index,data=read_until(file,index,")))")
+      index,data=read_until(file,index+3,")))")
       splitted=data.split(";")
       command=splitted[0]
       newargs=splitted[1:]
