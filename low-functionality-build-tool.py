@@ -22,7 +22,8 @@ def read_until(data,index,pattern,escapechar=None):
     if data[index].startswith(pattern): break
     if data[index].startswith(escapechar):
       escaped=True
-  return index+len(pattern),data[original_index:index]
+      index+=len(escapechar)
+  return index+len(pattern),data[original_index:index].replace(escape_character,"")
 
 def systemhook(args):
   raise ValueError("Invalid system hook")
