@@ -19,7 +19,7 @@ def read_until(data,index,pattern,escapechar=None):
     if escaped: 
       index+=1
     escaped=False
-    if data[index].startswith(pattern): break
+    if index>=len(data) or data[index].startswith(pattern): break
     if data[index].startswith(escapechar):
       escaped=True
       index+=len(escapechar)
