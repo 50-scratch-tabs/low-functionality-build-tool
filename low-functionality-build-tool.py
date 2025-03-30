@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-def read_until_nested_parenthesis(data,index,amt):
+def read_until_nested_parenthesis(data,index,amt,target=0):
   ogindex=index
   while 1:
     index+=1
