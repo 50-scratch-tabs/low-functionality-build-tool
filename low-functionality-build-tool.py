@@ -1,11 +1,27 @@
 import os
 import sys
 import re
-
-def read_until(data,index,pattern):
-  original_index=index
-  while index<len(data) and not data[index:].startswith(pattern):
+def read_until_nested_parenthesis(data,index,amt):
+  ogindex=index
+  while 1:
     index+=1
+    if data[index]=="(":
+      amt+=1
+    elif data[index]==")":
+      amt-=1
+    if amt==target:
+      return data[ogindex:index],index
+def read_until(data,index,pattern,escapechar=None):
+  original_index=index
+  escaped=False
+  while 1: #index<len(data) and not data[index:].startswith(pattern):
+    index+=1
+    if escaped: 
+      index+=1
+    escaped=False
+    if data[index].startswith(pattern): break
+    if data[index].startswith(escapechar):
+      escaped=True
   return index+len(pattern),data[original_index:index]
 
 def systemhook(args):
@@ -28,18 +44,22 @@ def findarg(args,target,placeholder):
         return i[1]
   return placeholder
 
-def parse(title,args=[]):
-  try: file=open(os.path.join(build_directory,title)).read()
-  except FileNotFoundError: raise ValueError("Invalid title")
+def parse(title,args=[],type="filename"):
+  if type=="filename":
+    try: file=open(os.path.join(build_directory,title)).read()
+    except FileNotFoundError: raise ValueError("Invalid title")
+  else: file=title
   parsed=""
   index=0
   route=None
   while True:
     if file[index:index+3]=="(((":
-      index,data=read_until(file,index+3,")))")
-      splitted=data.split(";")
-      command=splitted[0]
-      newargs=splitted[1:]
+      newindex,data=read_until_nested_parenthesis(file,index+3,3)
+      index,command=read_until(file, index+3,";","((()))")
+      newargs=[]
+      index,command=read_until(file, index+3,";","((()))")
+      while index<newindex:
+        newargs.append(parse(read_until(file, index+3,";","((()))"),args,"data"))
       if command=="system":
         parsed+=systemhook(newargs)
       elif command=="route":
