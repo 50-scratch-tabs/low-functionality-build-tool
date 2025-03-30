@@ -10,7 +10,7 @@ def read_until_nested_parenthesis(data,index,amt,target=0):
     elif data[index]==")":
       amt-=1
     if amt==target:
-      return data[ogindex:index],index
+      return index,data[ogindex:index]
 def read_until(data,index,pattern,escapechar=None):
   original_index=index
   escaped=False
