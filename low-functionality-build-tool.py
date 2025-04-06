@@ -58,7 +58,6 @@ def parse(title,args=[],type="filename"):
       newindex,data=read_until_nested_parenthesis(file,index+3,3)
       index,command=read_until(file, index+3,";","((()))")
       newargs=[]
-      index,command=read_until(file, index+3,";","((()))")
       while index<newindex:
         newargs.append(parse(read_until(file, index+3,";","((()))"),args,"data"))
       if command=="system":
