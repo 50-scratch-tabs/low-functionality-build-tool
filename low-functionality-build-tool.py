@@ -59,7 +59,7 @@ def parse(title,args=[],type="filename"):
       index,command=read_until(file, index+3,";","((()))")
       newargs=[]
       while index<newindex:
-        newargs.append(parse(read_until(file, index+3,";","((()))"),args,"data"))
+        newargs.append(parse(read_until(file, index+3,";","((()))")[1],args,"data"))
       if command=="system":
         parsed+=systemhook(newargs)
       elif command=="route":
